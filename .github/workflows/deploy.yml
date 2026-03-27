@@ -17,9 +17,6 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: euna-claude-guide
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,7 +26,6 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: euna-claude-guide/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -37,7 +33,7 @@ jobs:
       - name: Build static export
         run: npm run build
         env:
-          NEXT_PUBLIC_BASE_PATH: /AI-Example
+          NEXT_PUBLIC_BASE_PATH: /euna-claude-guide
 
       - name: Add .nojekyll
         run: touch out/.nojekyll
@@ -45,7 +41,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./euna-claude-guide/out
+          path: ./out
 
   deploy:
     environment:
